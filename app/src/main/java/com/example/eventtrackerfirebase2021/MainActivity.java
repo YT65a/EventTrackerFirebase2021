@@ -35,7 +35,12 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener(){
                                                  @Override
                                                  public void onSelectedDayChange(CalendarView calendarView, int year, int month, int day) {
-                                                     dateSelected =  (month + 1) + "/" + day + "/" + year;
+                                                      if ((month + 1) < 10) {
+                                                         dateSelected = "0" + (month + 1) + "/" + day + "/" + year;
+                                                      }
+                                                      else {
+                                                         dateSelected = (month + 1) + "/" + day + "/" + year;
+                                                     }
                                                      dateYear = year;
                                                      dateMonth = month + 1;
                                                      dateDay = day;
@@ -52,10 +57,10 @@ public class MainActivity extends AppCompatActivity {
 
         // verify there is a name and date
         if (eventName.length() == 0 ) {
-            Toast.makeText(MainActivity.this, "Please enter name", Toast.LENGTH_SHORT).show();
+            toastMessage("Please enter name");
         }
         else if (dateSelected.equals("No date chosen")) {
-            Toast.makeText(MainActivity.this, "Please select Date", Toast.LENGTH_SHORT).show();
+            toastMessage("Please select Date"):
         }
         else {
             Log.i(TAG, "Trying to add: " + eventName + ", " + dateSelected);
@@ -76,4 +81,11 @@ public class MainActivity extends AppCompatActivity {
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+     /*
+        This method improves readability of the code for toast messages.  It is a simple helper method
+     */
+    private void toastMessage(String message){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    
 }
